@@ -45,7 +45,7 @@ export function Navbar() {
 			<nav className="site-nav" aria-label="Main navigation">
 				<Link href="/" className="brand">
 					<span className="brand-mark"><HeartPulse size={22} strokeWidth={2.5} /></span>
-					<strong>Medical Image Diagnosis</strong>
+					<strong>MediQ</strong>
 				</Link>
 				<div className="nav-links">
 					{links.map(({ href, label, icon: Icon }) => (

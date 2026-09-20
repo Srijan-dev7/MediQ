@@ -11,7 +11,7 @@ export default function Home() {
 				<section className="hero-section">
 					<div className="hero-copy">
 						<span className="eyebrow"><Activity size={14} /> EDUCATIONAL &amp; RESEARCH USE</span>
-						<h1>Medical Image Diagnosis</h1>
+						<h1>MediQ</h1>
 						<p>Analyze medical images using deep learning models.</p>
 						<p>
 							This workspace acts as an institutional reference node. Deploy convolutional neural networks to

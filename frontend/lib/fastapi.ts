@@ -18,7 +18,7 @@ export async function forwardPrediction(request: Request, diseasePath: string) {
   const error = validateUpload(image);
   if (error) return Response.json({ detail: error }, { status: 400 });
 
-  const apiUrl = process.env.FASTAPI_URL;
+  const apiUrl = process.env.Instead of my ;
   if (!apiUrl) return Response.json({ detail: "FASTAPI_URL is not configured." }, { status: 500 });
   const form = new FormData(); form.append("image", image); form.append("model_variant", String(modelVariant));
   try {
