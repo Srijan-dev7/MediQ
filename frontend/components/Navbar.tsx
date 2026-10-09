@@ -1,7 +1,8 @@
 "use client";
 
-import { BarChart3, HeartPulse, History, Home, Moon, Stethoscope, Sun, UserRound } from "lucide-react";
+import { BarChart3, HeartPulse, History, Home, LogIn, LogOut, Moon, Stethoscope, Sun, UserRound } from "lucide-react";
 import Link from "next/link";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
 const links = [
@@ -12,14 +13,14 @@ const links = [
 ];
 
 export function Navbar() {
-	const [darkMode, setDarkMode] = useState(false);
+	const [darkMode, setDarkMode] = useState(() =>
+		typeof window !== "undefined" && window.localStorage.getItem("medical-theme") === "dark",
+	);
+	const { data: session, status } = useSession();
 
 	useEffect(() => {
-		const savedTheme = window.localStorage.getItem("medical-theme");
-		const enabled = savedTheme === "dark";
-		setDarkMode(enabled);
-		document.documentElement.classList.toggle("dark", enabled);
-	}, []);
+		document.documentElement.classList.toggle("dark", darkMode);
+	}, [darkMode]);
 
 	function toggleTheme() {
 		const enabled = !darkMode;
@@ -60,8 +61,16 @@ export function Navbar() {
 							<Sun size={17} />
 						</span>
 					</button>
-					<span className="user-avatar" aria-hidden="true"><UserRound size={15} /></span>
-					<span className="profile-name">User</span>
+					{status === "authenticated" ? (
+						<button className="profile-name auth-action" type="button" onClick={() => signOut({ callbackUrl: "/" })}>
+							<span className="user-avatar" aria-hidden="true"><UserRound size={15} /></span>
+							{session.user?.name ?? "Account"}<LogOut size={14} />
+						</button>
+					) : status !== "loading" ? (
+						<button className="profile-name auth-action" type="button" onClick={() => signIn("google", { callbackUrl: "/" })}>
+							<LogIn size={15} /> Sign in with Google
+						</button>
+					) : null}
 				</div>
 			</nav>
 		</header>
