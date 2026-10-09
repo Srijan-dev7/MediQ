@@ -3,13 +3,24 @@ import GoogleProvider from "next-auth/providers/google";
 import { connectToDatabase } from "@/lib/mongodb";
 import { User } from "@/models/User";
 
+const googleClientId = process.env.AUTH_GOOGLE_ID;
+const googleClientSecret = process.env.AUTH_GOOGLE_SECRET;
+const nextAuthSecret = process.env.NEXTAUTH_SECRET;
+
+if (!googleClientId || !googleClientSecret || !nextAuthSecret) {
+	throw new Error(
+		"AUTH_GOOGLE_ID, AUTH_GOOGLE_SECRET, and NEXTAUTH_SECRET must be configured.",
+	);
+}
+
 export const authOptions: AuthOptions = {
 	providers: [
 		GoogleProvider({
-			clientId: process.env.AUTH_GOOGLE_ID ?? "",
-			clientSecret: process.env.AUTH_GOOGLE_SECRET ?? "",
+			clientId: googleClientId,
+			clientSecret: googleClientSecret,
 		}),
 	],
+	secret: nextAuthSecret,
 	session: { strategy: "jwt" },
 	callbacks: {
 		async signIn({ user }) {

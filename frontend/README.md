@@ -16,6 +16,16 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Authentication environment
+
+Configure every variable in `.env.example` before starting the app. For a Render deployment, set the same values in the frontend service environment and set `NEXTAUTH_URL` to the deployed frontend URL. Add this callback URL to the Google OAuth client:
+
+```text
+https://your-frontend-service.onrender.com/api/auth/callback/google
+```
+
+`NEXTAUTH_SECRET` must be a stable random value. Do not use placeholder values in production.
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
